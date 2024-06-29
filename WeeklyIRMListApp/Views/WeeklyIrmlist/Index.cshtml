@@ -1,0 +1,84 @@
+﻿@model IEnumerable<WeeklyIRMListApp.Models.WeeklyIrmlist>
+
+@{
+    ViewData["Title"] = "Weekly IRM List";
+}
+
+<form asp-action="Index" method="get">
+    <div class="container">
+        <div class="row pb-2">
+            <div class="col-6">
+                <label for="startDateTime">Start Date:</label>
+                <input type="date" name="startDateTime" id="startDateTime" class="form-control" value="@ViewBag.StartDateTime?.ToString("yyyy-MM-dd")" />
+            </div>
+            <div class="col-6">
+                <label for="targetEndDateTime">End Date:</label>
+                <input type="date" name="targetEndDateTime" id="targetEndDateTime" class="form-control" value="@ViewBag.TargetEndDateTime?.ToString("yyyy-MM-dd")" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary">Fetch Records</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <div class="table-responsive p-3" style="max-height:700px; overflow-y:auto">
+        <table class="table table-stripped table-bordered">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Change Ticket</th>
+                    <th>Summary</th>
+                    <th>Issue Type</th>
+                    <th>Applications</th>
+                    <th>Reporter</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Start Date Time</th>
+                    <th>Target End Date Time</th>
+                    <th>Review Status</th>
+                    <th>Prerequisite Ticket</th>
+                    <th>Middleware Task</th>
+                    <th>Build Type</th>
+                    <th>Elevated Permission</th>
+                    <th>Takeoffs Owner</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Key</td>
+                        <td>@item.ChangeTicket</td>
+                        <td>@item.Summary</td>
+                        <td>@item.IssueType</td>
+                        <td>@item.Applications</td>
+                        <td>@item.Reporter</td>
+                        <td>@item.Status</td>
+                        <td>@item.Created.ToString("yyyy-MM-dd")</td>
+                        <td>@item.StartDateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                        <td>@item.TargetEndDateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                        <td>@item.ReviewStatus</td>
+                        <td>@item.PrerequisiteTicket</td>
+                        <td>@item.MiddlewareTask</td>
+                        <td>@item.BuildType</td>
+                        <td>@item.ElevatedPermission</td>
+                        <td>@item.TakeoffsOwner</td>
+                        <td>@item.Remarks</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    
+}
+else
+{
+    <p>No records found within the specified date range.</p>
+}

@@ -4,22 +4,55 @@
     ViewData["Title"] = "Weekly IRM List";
 }
 
+@section Styles {
+    <style>
+        .table-responsive {
+            max-height: 550px;
+            overflow-y: auto;
+            overflow-x: auto;
+        }
+
+        .table th, .table td {
+            white-space: nowrap;
+            padding: 12px 15px;
+        }
+
+        .table th {
+            background-color: #343a40;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .table {
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .highlight-red {
+            background-color: #ffd5c9;
+        }
+    </style>
+}
+
 <form asp-action="Index" method="get">
     <div class="container">
         <div class="row pb-2">
-            <div class="col-6">
+            <div class="col-4">
                 <label for="startDateTime">Start Date:</label>
                 <input type="date" name="startDateTime" id="startDateTime" class="form-control" value="@ViewBag.StartDateTime?.ToString("yyyy-MM-dd")" />
             </div>
-            <div class="col-6">
+            <div class="col-4">
                 <label for="targetEndDateTime">End Date:</label>
                 <input type="date" name="targetEndDateTime" id="targetEndDateTime" class="form-control" value="@ViewBag.TargetEndDateTime?.ToString("yyyy-MM-dd")" />
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-6">
-                <button type="submit" class="btn btn-primary">Fetch Records</button>
+            <div class="col-4 align-self-end">
+                <button type="submit" class="btn btn-outline-secondary w-100">Fetch Records</button>
             </div>
         </div>
     </div>
@@ -27,58 +60,66 @@
 
 @if (Model != null && Model.Any())
 {
-    <div class="table-responsive p-3" style="max-height:700px; overflow-y:auto">
-        <table class="table table-stripped table-bordered">
-            <thead>
-                <tr>
-                    <th>Key</th>
-                    <th>Change Ticket</th>
-                    <th>Summary</th>
-                    <th>Issue Type</th>
-                    <th>Applications</th>
-                    <th>Reporter</th>
-                    <th>Status</th>
-                    <th>Created</th>
-                    <th>Start Date Time</th>
-                    <th>Target End Date Time</th>
-                    <th>Review Status</th>
-                    <th>Prerequisite Ticket</th>
-                    <th>Middleware Task</th>
-                    <th>Build Type</th>
-                    <th>Elevated Permission</th>
-                    <th>Takeoffs Owner</th>
-                    <th>Remarks</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+    <div class="container mt-5">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-dark text-center">
                     <tr>
-                        <td>@item.Key</td>
-                        <td>@item.ChangeTicket</td>
-                        <td>@item.Summary</td>
-                        <td>@item.IssueType</td>
-                        <td>@item.Applications</td>
-                        <td>@item.Reporter</td>
-                        <td>@item.Status</td>
-                        <td>@item.Created.ToString("yyyy-MM-dd")</td>
-                        <td>@item.StartDateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
-                        <td>@item.TargetEndDateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
-                        <td>@item.ReviewStatus</td>
-                        <td>@item.PrerequisiteTicket</td>
-                        <td>@item.MiddlewareTask</td>
-                        <td>@item.BuildType</td>
-                        <td>@item.ElevatedPermission</td>
-                        <td>@item.TakeoffsOwner</td>
-                        <td>@item.Remarks</td>
+                        <th>Key</th>
+                        <th>Change Ticket</th>
+                        <th>Summary</th>
+                        <th>Issue Type</th>
+                        <th>Applications</th>
+                        <th>Reporter</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Start Date Time</th>
+                        <th>Target End Date Time</th>
+                        <th>Review Status</th>
+                        <th>Prerequisite Ticket</th>
+                        <th>Middleware Task</th>
+                        <th>Build Type</th>
+                        <th>Elevated Permission</th>
+                        <th>Takeoffs Owner</th>
+                        <th>Remarks</th>
+                        <th>Flag</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var rowHighlight = string.IsNullOrEmpty(item.Flag) || item.Flag == "NA" ? "" : "highlight-red";
+                        <tr class="@rowHighlight">
+                            <td>@item.Key</td>
+                            <td>@item.ChangeTicket</td>
+                            <td>@item.Summary</td>
+                            <td>@item.IssueType</td>
+                            <td>@item.Applications</td>
+                            <td>@item.Reporter</td>
+                            <td>@item.Status</td>
+                            <td>@item.Created.ToString("yyyy-MM-dd")</td>
+                            <td>@item.StartDateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                            <td>@item.TargetEndDateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                            <td>@item.ReviewStatus</td>
+                            <td>@item.PrerequisiteTicket</td>
+                            <td>@item.MiddlewareTask</td>
+                            <td>@item.BuildType</td>
+                            <td>@item.ElevatedPermission</td>
+                            <td>@item.TakeoffsOwner</td>
+                            <td>@item.Remarks</td>
+                            <td>@item.Flag</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-    
 }
 else
 {
-    <p>No records found within the specified date range.</p>
+    <div class="row p-5">
+        <div class="col-12 text-center">
+            <p>No records found within the specified date range.</p>
+        </div>
+    </div>
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WeeklyIRMListApp.Models;
 
@@ -40,4 +41,7 @@ public partial class WeeklyIrmlist
     public string TakeoffsOwner { get; set; } = null!;
 
     public string Remarks { get; set; } = null!;
+
+    [NotMapped]
+    public string Flag { get; set; } = null!;
 }

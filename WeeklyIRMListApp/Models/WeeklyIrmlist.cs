@@ -8,19 +8,19 @@ namespace WeeklyIRMListApp.Models;
 public partial class WeeklyIrmlist
 {
     [Key]
-    public string Key { get; set; } = null!;
+    public string Key { get; set; }
 
-    public string ChangeTicket { get; set; } = null!;
+    public string ChangeTicket { get; set; }
 
-    public string Summary { get; set; } = null!;
+    public string Summary { get; set; }
 
-    public string IssueType { get; set; } = null!;
+    public string IssueType { get; set; }
 
-    public string Applications { get; set; } = null!;
+    public string Applications { get; set; }
 
-    public string Reporter { get; set; } = null!;
+    public string Reporter { get; set; }
 
-    public string Status { get; set; } = null!;
+    public string Status { get; set; }
 
     public DateTime Created { get; set; }
 
@@ -28,20 +28,20 @@ public partial class WeeklyIrmlist
 
     public DateTime TargetEndDateTime { get; set; }
 
-    public string ReviewStatus { get; set; } = null!;
+    public string ReviewStatus { get; set; }
 
-    public string PrerequisiteTicket { get; set; } = null!;
+    public string PrerequisiteTicket { get; set; }
 
-    public string MiddlewareTask { get; set; } = null!;
+    public string MiddlewareTask { get; set; }
 
-    public string BuildType { get; set; } = null!;
+    public string BuildType { get; set; }
 
-    public string ElevatedPermission { get; set; } = null!;
+    public string ElevatedPermission { get; set; }
 
-    public string TakeoffsOwner { get; set; } = null!;
+    public string TakeoffsOwner { get; set; }
 
-    public string Remarks { get; set; } = null!;
+    public string Remarks { get; set; }
 
     [NotMapped]
-    public string Flag { get; set; } = null!;
+    public string Flag { get; set; }
 }

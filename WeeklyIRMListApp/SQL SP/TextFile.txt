@@ -1,0 +1,46 @@
+﻿
+-- Get all records from the IRM table
+Create Procedure spGetAllList
+AS
+BEGIN
+	Select * From dbo.WeeklyIRMList;
+END;
+GO
+
+EXEC spGetAllList;
+GO
+
+
+-- Alter the stored procedure
+ALTER PROCEDURE spDateRangeGetIRM
+    @startDate DATETIME,
+    @endDate DATETIME,
+    @currentDate DATETIME
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT *,
+        CASE
+            WHEN ABS(DATEDIFF(HOUR, Created, StartDateTime)) <= 24 THEN 'Started within 24 Hours of Creation'
+            WHEN ABS(DATEDIFF(HOUR, @currentDate, StartDateTime)) <= 48 AND UPPER(Status) IN ('RELEASE REQUEST OPENED', 'IN TAKEOFFS APPROVAL') 
+                THEN 'Difference between start date and today''s date is less than 48 hours for RRO or ITO status'
+            ELSE 'NA'
+        END AS Flag
+    FROM dbo.WeeklyIRMList
+    WHERE StartDateTime >= @startDate AND TargetEndDateTime <= @endDate
+    ORDER BY StartDateTime;
+END;
+GO
+
+-- Example input parameters for start date, end date, and current date
+DECLARE @exampleStartDate DATETIME = '2024-06-27 00:00:00';
+DECLARE @exampleEndDate DATETIME = '2024-07-09 00:00:00';
+DECLARE @exampleCurrDate DATETIME = '2024-07-08 20:02:17';
+
+-- Execute the stored procedure with the example parameters
+EXEC spDateRangeGetIRM @startDate = @exampleStartDate, @endDate = @exampleEndDate, @currentDate = @exampleCurrDate;
+GO
+
+
+EXEC sp_help spDateRangeGetIRM;

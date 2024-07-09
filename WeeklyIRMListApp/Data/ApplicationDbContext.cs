@@ -2,6 +2,7 @@
 using WeeklyIRMListApp.Models;
 using System;
 using System.Collections.Generic;
+using WeeklyIRMListApp.Models.ModelDTO;
 
 namespace WeeklyIRMListApp.Data
 {
@@ -46,19 +47,64 @@ namespace WeeklyIRMListApp.Data
                 entity.Property(e => e.PrerequisiteTicket)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-                entity.Property(e => e.Remarks).IsUnicode(false);
-                entity.Property(e => e.Reporter).IsUnicode(false);
+                entity.Property(e => e.Remarks)
+                    .IsUnicode(false);
+                entity.Property(e => e.Reporter)
+                    .IsUnicode(false);
                 entity.Property(e => e.ReviewStatus)
                     .HasMaxLength(50)
                     .IsUnicode(false);
                 entity.Property(e => e.Status)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-                entity.Property(e => e.Summary).IsUnicode(false);
-                entity.Property(e => e.TakeoffsOwner).HasMaxLength(50);
+                entity.Property(e => e.Summary)
+                    .IsUnicode(false);
+                entity.Property(e => e.TakeoffsOwner)
+                    .HasMaxLength(50);
             });
 
-            //OnModelCreatingPartial(modelBuilder);
+            modelBuilder.Entity<WeeklyIrmlistDto>(entity =>
+            {
+                entity.HasNoKey();
+                entity.Property(e => e.Key)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.Applications)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.BuildType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.ChangeTicket)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.ElevatedPermission)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.IssueType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.MiddlewareTask)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.PrerequisiteTicket)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.Remarks)
+                    .IsUnicode(false);
+                entity.Property(e => e.Reporter)
+                    .IsUnicode(false);
+                entity.Property(e => e.ReviewStatus)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.Status)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.Summary)
+                    .IsUnicode(false);
+                entity.Property(e => e.TakeoffsOwner)
+                    .HasMaxLength(50);
+            });
         }
         //partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
